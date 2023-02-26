@@ -1,12 +1,65 @@
-const buttons = document.querySelectorAll("[data-number]");
+//VARIABLES
+let firstNum = 0;
+let secondNum = 0;
+//SELECTORS
+let displayLast = document.querySelector("#last-operation");
+let displayCurrent = document.querySelector("#current-operation");
+const allClear = document.querySelector("#all-clear");
+const numbers = document.querySelectorAll("[data-number]");
+const operators = document.querySelectorAll("[data-operator]");
 
-buttons.forEach((arrElement) => {
-  arrElement.addEventListener("click", () =>
-    console.log(arrElement.textContent)
-  );
+displayCurrent.textContent = "0";
+
+//EVENTS
+allClear.addEventListener("click", restart);
+
+numbers.forEach((arrElement) => {
+  arrElement.addEventListener("click", () => {
+    if (displayCurrent.textContent.length < 15) {
+      append(arrElement.textContent);
+    } else {
+      console.log((displayCurrent.textContent = "Number is too big"));
+    }
+  });
 });
 
-//OPERATIONS
+operators.forEach((arrElement) => {
+  arrElement.addEventListener("click", () => {
+    if (secondNum === 0) {
+      secondNum = firstNum;
+      firstNum = 0;
+      displayCurrent.textContent = 0;
+      displayLast.textContent = secondNum + arrElement.textContent;
+    } else {
+      secondNum = operate(
+        String(arrElement.textContent),
+        Number(firstNum),
+        Number(secondNum)
+      );
+      firstNum = 0;
+      displayCurrent.textContent = 0;
+      displayLast.textContent = secondNum + arrElement.textContent;
+    }
+  });
+});
+
+//FUNCTIONS
+// - FUNCTIONALITY
+function append(numToDisplay) {
+  if (displayCurrent.textContent === "0") {
+    displayCurrent.textContent = "";
+  }
+  displayCurrent.textContent += numToDisplay;
+  firstNum = displayCurrent.textContent;
+}
+function restart() {
+  firstNum = 0;
+  secondNum = 0;
+  displayLast.textContent = "";
+  displayCurrent.textContent = "0";
+}
+
+// - OPERATIONS
 
 function add(num1, num2) {
   return num1 + num2;
