@@ -1,1 +1,5 @@
-Pa k kieres leer esto jaja salu2
+# CALCULATOR - by PabloPG
+
+## A calculator project to learn how to use event listeners
+
+### Created with HTML, CSS & JS
